@@ -7,14 +7,16 @@ var path = require('path'),
     morgan = require('morgan'),
     methodOverride = require('method-override'),
     errorHandler = require('errorhandler'),
-    moment = require('moment');
+    moment = require('moment'),
+    multer = require('multer');
 
 module.exports = function(app) {
     app.use(morgan('dev')); //Used for log server
-    app.use(bodyParser.json({ uploadDir: path.join(__dirname, 'public/upload/temp') }));
+    app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({
         extended: true
     }));
+    app.use(multer({ dest: path.join(__dirname, 'public/upload/temp') }).any());
     app.use(methodOverride()); //Support the browser that don't properly support REST
     app.use(cookieParser('some-secret-value-here')); // Allows cookies to be sent and received
     routes(app);
