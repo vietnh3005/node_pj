@@ -16,7 +16,9 @@ module.exports = function(app) {
     app.use(bodyParser.urlencoded({
         extended: true
     }));
-    app.use(multer({ dest: path.join(__dirname, 'public/upload/temp') }).any());
+
+    app.use(multer({ dest: path.join(__dirname, 'public/upload/temp') }).single('file'));
+
     app.use(methodOverride()); //Support the browser that don't properly support REST
     app.use(cookieParser('some-secret-value-here')); // Allows cookies to be sent and received
     routes(app);
