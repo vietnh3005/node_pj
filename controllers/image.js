@@ -42,21 +42,20 @@ module.exports = {
         var tempPath = req.file.path,
             ext = path.extname(req.file.originalname).toLowerCase(),
             targetPath = path.resolve('./public/upload/' + imgUrl + ext);
-        console.log(ext);
         if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.gif') {
             fs.rename(tempPath, targetPath, function(err) {
                 if (err) throw err;
                 res.redirect('/images/' + imgUrl);
             });
         } else {
-            fs.unlink(tempPath, function() {
+            fs.unlink(tempPath, function(err) {
                 if (err) throw err;
                 res.json(500, { error: 'Only image files are allowed.' });
             });
         }
     },
     like: function(req, res) {
-        res.send('The image:like POST controller');
+        res.json({ likes: 1 });
     },
     comment: function(req, res) {
         res.send('The image:comment POST controller');
